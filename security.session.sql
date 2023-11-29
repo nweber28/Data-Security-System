@@ -12,6 +12,17 @@ CREATE TABLE healthRecords (
 );
 
 -- @block
+CREATE TABLE credentials (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    uname VARCHAR(50) NOT NULL,
+    pword VARCHAR(50) NOT NULL
+);
+
+-- @block
+INSERT INTO credentials (uname, pword) VALUES
+('nweb', 'hobbes');
+
+-- @block
 INSERT INTO healthRecords (first_name, last_name, gender, age, weight, height, health_history) VALUES
 ('John', 'Doe', TRUE, 25, 70.5, 175.0, 'No significant health issues'),
 ('Jane', 'Smith', FALSE, 30, 62.0, 160.5, 'Allergic to peanuts'),
