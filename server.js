@@ -14,6 +14,8 @@ const methodOverride = require("method-override");
 const path = require("path"); // Import the path module
 const ejs = require("ejs");
 
+const databaseFunctions = require("./database");
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -56,12 +58,16 @@ app.post(
 app.post("/register", checkNotAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
     users.push({
       id: Date.now().toString(),
       name: req.body.name,
       email: req.body.email,
       password: hashedPassword,
     });
+
+    await databaseFunctions.createRecord(users[0].email, users[0].password);
+
     console.log(users); // Display newly registered in the console
     res.redirect("/login");
   } catch (e) {
