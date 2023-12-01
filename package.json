@@ -136,7 +136,8 @@
     "yallist": "^4.0.0"
   },
   "scripts": {
-    "devStart": "nodemon server.js"
+    "dev-start": "nodemon server.js",
+    "db-init": "node databaseInit.js"
   },
   "author": "",
   "license": "ISC",

@@ -14,7 +14,7 @@ const methodOverride = require("method-override");
 const path = require("path"); // Import the path module
 const ejs = require("ejs");
 
-const databaseFunctions = require("./database");
+const databaseFunctions = require("./databaseUtils");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

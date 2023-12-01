@@ -7,4 +7,5 @@ Node JS
 npm
 
 'npm install'
-'npm run devStart'
+'npm run db-init'
+'npm run dev-start'

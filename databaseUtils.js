@@ -41,9 +41,3 @@ module.exports = {
   createRecord,
   getRecord,
 };
-
-// const res = await createRecord("gwen", "beaker");
-// console.log(res);
-
-// const table = await getRecord();
-// console.log(table);
