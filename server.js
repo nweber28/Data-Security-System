@@ -14,6 +14,8 @@ const methodOverride = require("method-override");
 const path = require("path"); // Import the path module
 const ejs = require("ejs");
 
+const databaseFunctions = require("./databaseUtils");
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -22,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 initializePassport(
   passport,
-  (email) => users.find((user) => user.email === email),
+  (username) => users.find((user) => user.username === username),
   (id) => users.find((user) => user.id === id)
 );
 
@@ -56,12 +58,18 @@ app.post(
 app.post("/register", checkNotAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
     users.push({
       id: Date.now().toString(),
-      name: req.body.name,
-      email: req.body.email,
+      username: req.body.username,
       password: hashedPassword,
     });
+
+    await databaseFunctions.createRecord(
+      users[users.length - 1].username,
+      users[users.length - 1].password
+    );
+
     console.log(users); // Display newly registered in the console
     res.redirect("/login");
   } catch (e) {
@@ -72,7 +80,7 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
 
 // Routes
 app.get("/", checkAuthenticated, (req, res) => {
-  res.render("index.ejs", { name: req.user.name });
+  res.render("index.ejs");
 });
 
 app.get("/login", checkNotAuthenticated, (req, res) => {
