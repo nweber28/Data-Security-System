@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 initializePassport(
   passport,
-  (email) => users.find((user) => user.email === email),
+  (username) => users.find((user) => user.username === username),
   (id) => users.find((user) => user.id === id)
 );
 
@@ -61,11 +61,14 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
 
     users.push({
       id: Date.now().toString(),
-      email: req.body.email,
+      username: req.body.username,
       password: hashedPassword,
     });
 
-    await databaseFunctions.createRecord(users[0].email, users[0].password);
+    await databaseFunctions.createRecord(
+      users[users.length - 1].username,
+      users[users.length - 1].password
+    );
 
     console.log(users); // Display newly registered in the console
     res.redirect("/login");
