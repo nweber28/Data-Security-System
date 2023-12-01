@@ -61,7 +61,6 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
 
     users.push({
       id: Date.now().toString(),
-      name: req.body.name,
       email: req.body.email,
       password: hashedPassword,
     });
@@ -78,7 +77,7 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
 
 // Routes
 app.get("/", checkAuthenticated, (req, res) => {
-  res.render("index.ejs", { name: req.user.name });
+  res.render("index.ejs");
 });
 
 app.get("/login", checkNotAuthenticated, (req, res) => {
