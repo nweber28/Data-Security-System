@@ -13,7 +13,7 @@ const pool = mysql
   })
   .promise();
 
-const initQuery = `
+const inithealthRecords = `
 IF NOT EXISTS (SELECT * FROM information_schema.tables WHERE table_name = 'healthRecords') THEN
 CREATE TABLE healthRecords (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -129,14 +129,21 @@ INSERT INTO healthRecords (first_name, last_name, gender, age, weight, height, h
 ('Scarlett', 'Ward', FALSE, 35, 59.2, 160.8, 'Cystic Fibrosis');
 END IF;`;
 
-function createTable() {
+const initCredentials = `CREATE TABLE IF NOT EXISTS credentials (
+  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  uname varchar(50) NOT NULL,
+  pword varchar(100) NOT NULL
+);`;
+
+function createTable(queryString) {
   return new Promise(async (resolve, reject) => {
     try {
-      const [result] = await pool.query(initQuery);
+      const [result] = await pool.query(queryString);
     } catch (error) {
       reject(error);
     }
   });
 }
 
-createTable();
+createTable(inithealthRecords);
+createTable(initCredentials);
