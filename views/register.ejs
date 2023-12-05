@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Register</title>
     <!-- CSS only -->
     <link
@@ -41,6 +42,7 @@
                         name="username"
                         id="form3Example3"
                         class="form-control"
+                        required
                       />
                       <label class="form-label" for="form3Example3"
                         >Create Username</label
@@ -54,10 +56,38 @@
                         name="password"
                         id="form3Example4"
                         class="form-control"
+                        required
                       />
                       <label class="form-label" for="form3Example4"
                         >Create Password</label
                       >
+                    </div>
+
+                    <!-- group button -->
+                    <div>
+                      <fieldset>
+                        <legend>Choose an Option:</legend>
+                        <label>
+                          <input
+                            type="radio"
+                            name="option"
+                            id="option1"
+                            value="option1"
+                            required
+                          />
+                          Group H
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name="option"
+                            id="option2"
+                            value="option2"
+                            required
+                          />
+                          Group R
+                        </label>
+                      </fieldset>
                     </div>
 
                     <!-- Submit button -->

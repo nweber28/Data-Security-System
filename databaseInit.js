@@ -10,8 +10,9 @@ const pool = mysql
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
+    port:3006,
   })
-  .promise();
+  .promise(); 
 
 const inithealthRecords = `
 IF NOT EXISTS (SELECT * FROM information_schema.tables WHERE table_name = 'healthRecords') THEN
