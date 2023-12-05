@@ -12,6 +12,13 @@ const pool = mysql
   })
   .promise();
 
+async function getUserByUsername(username) {
+  const [rows] = await pool.query("SELECT * FROM credentials WHERE uname = ?", [
+    username,
+  ]);
+  return rows[0];
+}
+
 async function getRecord(id) {
   const [rows] = await pool.query("SELECT * FROM credentials WHERE id = ?", [
     id,
@@ -40,4 +47,5 @@ function createRecord(uname, pword) {
 module.exports = {
   createRecord,
   getRecord,
+  getUserByUsername,
 };

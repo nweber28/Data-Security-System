@@ -7,6 +7,7 @@ const express = require("express");
 const app = express();
 const bcrypt = require("bcrypt"); // Importing bcrypt package
 const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 const initializePassport = require("./passport-config");
 const flash = require("express-flash");
 const session = require("express-session");
@@ -54,6 +55,36 @@ app.post(
   })
 );
 
+// verify user credentials at login
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: "username", // Make sure this matches the 'name' attribute in your form
+      passwordField: "password",
+      passReqToCallback: true,
+    },
+    async (req, username, password, done) => {
+      try {
+        const user = await databaseFunctions.getUserByUsername(username);
+
+        if (!user) {
+          return done(null, false, { message: "No user with that username" });
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.pword);
+
+        if (passwordMatch) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: "Password incorrect" });
+        }
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
+);
+
 // Configuring the register post functionality
 app.post("/register", checkNotAuthenticated, async (req, res) => {
   try {
@@ -79,8 +110,16 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
 });
 
 // Routes
-app.get("/", checkAuthenticated, (req, res) => {
-  res.render("index.ejs");
+app.get("/", checkAuthenticated, async (req, res) => {
+  try {
+    const user = await req.user;
+    res.render("index.ejs", { username: user.uname });
+    console.log(user);
+  } catch (error) {
+    console.error(error);
+    // Handle the error, perhaps redirect to an error page
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.get("/login", checkNotAuthenticated, (req, res) => {
@@ -93,8 +132,13 @@ app.get("/register", checkNotAuthenticated, (req, res) => {
 // End Routes
 
 app.delete("/logout", (req, res) => {
-  req.logOut();
-  res.redirect("/login");
+  req.logout((err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Internal Server Error");
+    }
+    res.redirect("/login");
+  });
 });
 
 app.delete("/logout", (req, res) => {
