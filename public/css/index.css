@@ -3,3 +3,33 @@
   padding: 0;
   max-width: 100%;
 }
+
+#health-records {
+  max-height: 300px; /* Set a fixed height for the table container */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ddd; /* Optional: Add border for better visibility */
+  position: relative;
+  width: 85%;
+  left: 7.5%;
+}
+
+/* Style the table */
+table {
+  width: 100%; /* Occupy the full width of the container */
+  border-collapse: collapse;
+  max-height: 250px;
+}
+
+/* Style the header row */
+thead {
+  background-color: #f8f9fa; /* Header background color */
+  position: sticky;
+  top: 0;
+}
+
+th,
+td {
+  padding: 8px; /* Add padding for better spacing */
+  border: 1px solid #ddd; /* Optional: Add borders for better visibility */
+  text-align: left; /* Adjust text alignment as needed */
+}
