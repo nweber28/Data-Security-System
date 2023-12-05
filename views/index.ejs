@@ -43,6 +43,44 @@
         <p class="lead"></p>
       </main>
 
+      <div id="health-records">
+        <div>
+          <table>
+            <thead id="records-head">
+              <tr>
+                <th>id</th>
+                <th>First</th>
+                <th>Last</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Weight</th>
+                <th>Height</th>
+                <th>Health History</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% records[0].forEach(record => { %>
+              <tr>
+                <td><%= record.id %></td>
+                <td><%= record.first_name %></td>
+                <td><%= record.last_name %></td>
+                <td><%= record.gender %></td>
+                <td><%= record.age %></td>
+                <td><%= record.weight %></td>
+                <td><%= record.height %></td>
+                <td><%= record.health_history %></td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Bootstrap JS and Popper.js (required for Bootstrap components) -->
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
       <footer class="mt-auto text-dark-50"></footer>
     </div>
 

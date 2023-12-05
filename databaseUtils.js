@@ -9,6 +9,7 @@ const pool = mysql
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
+    port: 3006,
   })
   .promise();
 
@@ -44,8 +45,15 @@ function createRecord(uname, pword) {
   });
 }
 
+async function getHealthRecords() {
+  const healthQuery = "SELECT * FROM healthRecords";
+  const result = await pool.query(healthQuery);
+  return result;
+}
+
 module.exports = {
   createRecord,
   getRecord,
   getUserByUsername,
+  getHealthRecords,
 };

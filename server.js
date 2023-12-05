@@ -100,8 +100,6 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
       users[users.length - 1].username,
       users[users.length - 1].password
     );
-
-    console.log(users); // Display newly registered in the console
     res.redirect("/login");
   } catch (e) {
     console.log(e);
@@ -113,8 +111,9 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
 app.get("/", checkAuthenticated, async (req, res) => {
   try {
     const user = await req.user;
-    res.render("index.ejs", { username: user.uname });
-    console.log(user);
+    const returnQuery = await databaseFunctions.getHealthRecords();
+    // Render the page with the combined data
+    res.render("index.ejs", { username: user.uname, records: returnQuery });
   } catch (error) {
     console.error(error);
     // Handle the error, perhaps redirect to an error page
