@@ -89,16 +89,17 @@ passport.use(
 app.post("/register", checkNotAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
     users.push({
       id: Date.now().toString(),
       username: req.body.username,
       password: hashedPassword,
+      group: req.body.group,
     });
 
     await databaseFunctions.createRecord(
       users[users.length - 1].username,
-      users[users.length - 1].password
+      users[users.length - 1].password,
+      users[users.length - 1].group
     );
 
     console.log(users); // Display newly registered in the console
