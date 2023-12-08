@@ -136,6 +136,17 @@ const initCredentials = `CREATE TABLE IF NOT EXISTS credentials (
   pword varchar(100) NOT NULL
 );`;
 
+const addGroup = `IF NOT EXISTS (
+  SELECT 1
+  FROM information_schema.columns
+  WHERE table_name = 'credentials'
+  AND column_name = 'permissions'
+) THEN
+  ALTER TABLE credentials
+  ADD COLUMN permissions CHAR(1) NOT NULL;
+END IF;
+`;
+
 function createTable(queryString) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -148,3 +159,4 @@ function createTable(queryString) {
 
 createTable(inithealthRecords);
 createTable(initCredentials);
+createTable(addGroup);

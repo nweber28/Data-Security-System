@@ -5,6 +5,9 @@ Data Security System Project that exemplifies Data Security Techniques
 Dependencies:
 Node JS
 npm
+mySQL
+XAMPP
+db credentials in .env
 
 'npm install'
 'npm run db-init'

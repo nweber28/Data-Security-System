@@ -27,12 +27,12 @@ async function getRecord(id) {
   return rows[0];
 }
 
-function createRecord(uname, pword) {
+function createRecord(uname, pword, group) {
   return new Promise(async (resolve, reject) => {
     try {
       const [result] = await pool.query(
-        "INSERT INTO credentials (uname, pword) VALUES (?,?)",
-        [uname, pword]
+        "INSERT INTO credentials (uname, pword, permissions) VALUES (?,?,?)",
+        [uname, pword, group]
       );
 
       const id = result.insertId;
