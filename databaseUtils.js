@@ -45,8 +45,15 @@ function createRecord(uname, pword, group) {
   });
 }
 
+async function getHealthRecords() {
+  const healthQuery = "SELECT * FROM healthRecords";
+  const result = await pool.query(healthQuery);
+  return result;
+}
+
 module.exports = {
   createRecord,
   getRecord,
   getUserByUsername,
+  getHealthRecords,
 };
