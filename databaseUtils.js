@@ -86,4 +86,5 @@ module.exports = {
   getRecord,
   getUserByUsername,
   getHealthRecords,
+  getUserPermissions,
 };

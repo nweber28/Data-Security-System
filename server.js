@@ -115,9 +115,18 @@ app.get("/", checkAuthenticated, async (req, res) => {
 
     try {
       const returnQuery = await databaseFunctions.getHealthRecords(user.uname);
+      let returnAccess = await databaseFunctions.getUserPermissions(user.uname);
+      let access = false;
+      if (returnAccess[0].permissions == "H") {
+        access = true;
+      }
 
       // Render the page with the combined data
-      res.render("index.ejs", { username: user.uname, records: returnQuery });
+      res.render("index.ejs", {
+        username: user.uname,
+        records: returnQuery,
+        writeAccess: access,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server Error");
