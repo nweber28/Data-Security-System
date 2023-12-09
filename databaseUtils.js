@@ -45,10 +45,40 @@ function createRecord(uname, pword, group) {
   });
 }
 
-async function getHealthRecords() {
-  const healthQuery = "SELECT * FROM healthRecords";
-  const result = await pool.query(healthQuery);
-  return result;
+async function getUserPermissions(username) {
+  try {
+    const [groupResults] = await pool.query(
+      "SELECT permissions FROM credentials WHERE uname = ?",
+      [username]
+    );
+    return groupResults;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error fetching permission records.");
+  }
+}
+
+async function getHealthRecords(username) {
+  const groupResults = await getUserPermissions(username);
+  if (groupResults.length > 0) {
+    const userPermissions = groupResults[0].permissions;
+    let healthQuery;
+
+    // Determine the healthQuery based on user permissions
+    if (userPermissions === "H") {
+      healthQuery = "SELECT * FROM healthRecords";
+    } else {
+      healthQuery =
+        "SELECT id, gender, age, weight, height, health_history FROM healthRecords";
+      // healthQuery = "SELECT * FROM healthRecords";
+    }
+
+    // Query health records
+    const healthResults = await pool.query(healthQuery);
+    return healthResults;
+  } else {
+    throw new Error(`User with username ${username} not found.`);
+  }
 }
 
 module.exports = {
