@@ -108,6 +108,38 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
   }
 });
 
+// collect form data for new user
+app.post("/new-user", checkAuthenticated, async (req, res) => {
+  try {
+    const user = await req.user;
+
+    // Access form data from req.body
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const gender = req.body.gender;
+    const age = req.body.age;
+    const weight = req.body.weight;
+    const height = req.body.height;
+    const healthHistory = req.body.healthHistory;
+
+    databaseFunctions.createHealthRecord(
+      firstName,
+      lastName,
+      gender,
+      age,
+      weight,
+      height,
+      healthHistory
+    );
+
+    // Redirect or render a new page after processing the form
+    res.redirect("/");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // Routes
 app.get("/", checkAuthenticated, async (req, res) => {
   try {

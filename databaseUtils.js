@@ -27,6 +27,29 @@ async function getRecord(id) {
   return rows[0];
 }
 
+function createHealthRecord(first, last, gender, age, weight, height, history) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (gender == "male") {
+        gender = 1;
+      } else {
+        gender = 0;
+      }
+      const [result] = await pool.query(
+        "INSERT INTO healthRecords (first_name, last_name, gender, age, weight, height, health_history) VALUES (?,?,?,?,?,?,?)",
+        [first, last, gender, age, weight, height, history]
+      );
+
+      const id = result.insertId;
+      const record = await getRecord(id);
+
+      resolve(record);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 function createRecord(uname, pword, group) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -87,4 +110,5 @@ module.exports = {
   getUserByUsername,
   getHealthRecords,
   getUserPermissions,
+  createHealthRecord,
 };
