@@ -112,12 +112,18 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
 app.get("/", checkAuthenticated, async (req, res) => {
   try {
     const user = await req.user;
-    const returnQuery = await databaseFunctions.getHealthRecords();
-    // Render the page with the combined data
-    res.render("index.ejs", { username: user.uname, records: returnQuery });
+
+    try {
+      const returnQuery = await databaseFunctions.getHealthRecords(user.uname);
+
+      // Render the page with the combined data
+      res.render("index.ejs", { username: user.uname, records: returnQuery });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Internal Server Error");
+    }
   } catch (error) {
     console.error(error);
-    // Handle the error, perhaps redirect to an error page
     res.status(500).send("Internal Server Error");
   }
 });
