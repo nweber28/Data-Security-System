@@ -163,10 +163,12 @@ createTable(inithealthRecords);
 createTable(initCredentials);
 createTable(addGroup);
 
-const secretKey = `
-SET @secretKey = 'mySecretKey';
+const secretKey = securityFunctions.generateSecretKey();
 
+const secretAssign = `
+SET @secretKey = ${secretKey};
 UPDATE your_table
 SET encrypted_gender = AES_ENCRYPT(gender,@secretkey),
-    encrypted_age    = AES_ENCRYPT( CAST(age AS CHAR) , @secretKey);
-`;
+    encrypted_age    = AES_ENCRYPT( CAST(age AS CHAR) , @secretKey); `;
+
+createTable(secretAssign);
