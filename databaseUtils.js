@@ -1,5 +1,5 @@
 const mysql = require("mysql2");
-
+const crypto = require("crypto");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -29,14 +29,67 @@ async function getRecord(id) {
   return rows[0];
 }
 
+function generateRandomSalt(length) {
+  return crypto.randomBytes(length);
+}
+
+function encryptAge(age) {
+  const ageString = age.toString();
+
+  // Generate a random salt
+  const salt = generateRandomSalt(16); // 16 bytes for AES-256
+
+  // Use AES encryption
+  const cipher = crypto.createCipheriv(
+    "aes-256-ecb",
+    Buffer.alloc(32),
+    Buffer.alloc(0)
+  );
+  const encryptedData = Buffer.concat([
+    cipher.update(ageString, "utf8"),
+    cipher.final(),
+  ]);
+
+  // Concatenate salt and encrypted data
+  const encryptedValue = Buffer.concat([salt, encryptedData]);
+
+  // Convert the result to a hexadecimal string
+  const encryptedHexString = encryptedValue.toString("hex");
+
+  return encryptedHexString;
+}
+
+function encryptGender(gender) {
+  const salt = generateRandomSalt(16); // 16 bytes for AES-256
+
+  // Use AES encryption
+  const cipher = crypto.createCipheriv(
+    "aes-256-ecb",
+    Buffer.alloc(32),
+    Buffer.alloc(0)
+  );
+  const encryptedData = Buffer.concat([
+    cipher.update(gender, "utf8"),
+    cipher.final(),
+  ]);
+
+  // Concatenate salt and encrypted data
+  const encryptedValue = Buffer.concat([salt, encryptedData]);
+
+  // Convert the result to a hexadecimal string
+  const encryptedHexString = encryptedValue.toString("hex");
+
+  return encryptedHexString;
+}
+
 function createHealthRecord(first, last, gender, age, weight, height, history) {
   return new Promise(async (resolve, reject) => {
     try {
-      if (gender == "male") {
-        gender = 1;
-      } else {
-        gender = 0;
-      }
+      gender = encryptGender(gender);
+      age = encryptAge(age);
+
+      if (history == "") history = "None";
+
       const [result] = await pool.query(
         "INSERT INTO healthRecords (first_name, last_name, gender, age, weight, height, health_history) VALUES (?,?,?,?,?,?,?)",
         [first, last, gender, age, weight, height, history]

@@ -18,8 +18,12 @@ function digitalSignature(data) {
   const verify = crypto.createVerify("SHA256");
   verify.update(JSON.stringify(data));
   const isSignatureValid = verify.verify(publicKey, signature, "base64");
-  console.log(isSignatureValid);
+
   return isSignatureValid;
 }
+//Funciton that generates a randomly created secure key
+function generateSecretKey() {
+  return crypto.randomBytes(32).toString("hex");
+}
 
-module.exports = { digitalSignature };
+module.exports = { digitalSignature, generateSecretKey };
