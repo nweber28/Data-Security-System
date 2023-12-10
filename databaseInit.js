@@ -208,5 +208,3 @@ const secretKey = securityFunctions.generateSecretKey();
     connection.release();
   }
 })();
-
-process.exit();
