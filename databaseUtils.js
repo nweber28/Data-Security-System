@@ -3,6 +3,8 @@ const mysql = require("mysql2");
 const dotenv = require("dotenv");
 dotenv.config();
 
+const securityFunctions = require("./securityUtils.js");
+
 const pool = mysql
   .createPool({
     host: process.env.MYSQL_HOST,
@@ -93,12 +95,19 @@ async function getHealthRecords(username) {
     } else {
       healthQuery =
         "SELECT id, gender, age, weight, height, health_history FROM healthRecords";
-      // healthQuery = "SELECT * FROM healthRecords";
     }
 
     // Query health records
     const healthResults = await pool.query(healthQuery);
-    return healthResults;
+
+    const dataIntegrity = securityFunctions.digitalSignature(healthResults);
+
+    // alert user if data integrity is compromised
+    if (!dataIntegrity) {
+      console.error("Data Integrity Compromised!");
+    }
+
+    return { healthResults, dataIntegrity };
   } else {
     throw new Error(`User with username ${username} not found.`);
   }

@@ -147,6 +147,11 @@ app.get("/", checkAuthenticated, async (req, res) => {
 
     try {
       const returnQuery = await databaseFunctions.getHealthRecords(user.uname);
+
+      if (!returnQuery.dataIntegrity) {
+        res.send("Data Integrity Compromised!");
+      }
+
       let returnAccess = await databaseFunctions.getUserPermissions(user.uname);
       let access = false;
       if (returnAccess[0].permissions == "H") {
@@ -156,7 +161,7 @@ app.get("/", checkAuthenticated, async (req, res) => {
       // Render the page with the combined data
       res.render("index.ejs", {
         username: user.uname,
-        records: returnQuery,
+        records: returnQuery.healthResults,
         writeAccess: access,
       });
     } catch (error) {
