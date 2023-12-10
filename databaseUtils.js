@@ -88,6 +88,8 @@ function createHealthRecord(first, last, gender, age, weight, height, history) {
       gender = encryptGender(gender);
       age = encryptAge(age);
 
+      if (history == "") history = "None";
+
       const [result] = await pool.query(
         "INSERT INTO healthRecords (first_name, last_name, gender, age, weight, height, health_history) VALUES (?,?,?,?,?,?,?)",
         [first, last, gender, age, weight, height, history]
