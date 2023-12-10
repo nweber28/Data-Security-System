@@ -160,3 +160,5 @@ function createTable(queryString) {
 createTable(inithealthRecords);
 createTable(initCredentials);
 createTable(addGroup);
+
+process.exit();
