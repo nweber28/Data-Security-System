@@ -166,21 +166,6 @@ createTable(addGroup);
 
 const secretKey = securityFunctions.generateSecretKey();
 
-// const secretAssign = `
-// SET @secretKey = '${secretKey}';
-// `;
-
-// const updateEncryptedValues = `
-// UPDATE security.healthRecords
-// SET
-//   encrypted_gender = AES_ENCRYPT(CONCAT(id, gender), @secretKey),
-//   encrypted_age    = AES_ENCRYPT(CONCAT(id, CAST(age AS CHAR)), @secretKey);
-// `;
-
-// pool.query(secretAssign);
-// pool.query(updateEncryptedValues);
-// // createTable(secretAssign);
-// // createTable(updateEncryptedValues);
 (async () => {
   const connection = await pool.getConnection();
 
@@ -223,3 +208,5 @@ const secretKey = securityFunctions.generateSecretKey();
     connection.release();
   }
 })();
+
+process.exit();
