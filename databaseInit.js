@@ -160,3 +160,11 @@ function createTable(queryString) {
 createTable(inithealthRecords);
 createTable(initCredentials);
 createTable(addGroup);
+
+const secretKey = `
+SET @secretKey = 'mySecretKey';
+
+UPDATE your_table
+SET encrypted_gender = AES_ENCRYPT(gender,@secretkey),
+    encrypted_age    = AES_ENCRYPT(CAST(age AS CHAR) , @secretKey);
+`;
