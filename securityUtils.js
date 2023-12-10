@@ -21,5 +21,9 @@ function digitalSignature(data) {
   console.log(isSignatureValid);
   return isSignatureValid;
 }
+//Funciton that generates a randomly created secure key
+function generateSecretKey() {
+  return crypto.randomBytes(32).toString("hex");
+}
 
 module.exports = { digitalSignature };
