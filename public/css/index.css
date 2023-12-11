@@ -35,5 +35,7 @@ td {
 }
 
 #filters {
-  position: sticky;
+  display: flex;
+  flex-direction: row;
+  left: 3%;
 }

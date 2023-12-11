@@ -42,39 +42,34 @@
         <p class="lead text-dark text-center">Let's view some data</p>
         <p class="lead"></p>
       </main>
-
+      <div id="filters">
+        <div>
+          <label for="filterId">ID:</label>
+          <input type="text" id="filterId" oninput="filterTable()" />
+        </div>
+        <div>
+          <label for="filterFirst">First Name:</label>
+          <input type="text" id="filterFirst" oninput="filterTable()" />
+        </div>
+        <div>
+          <label for="filterLast">Last Name:</label>
+          <input type="text" id="filterLast" oninput="filterTable()" />
+        </div>
+        <div>
+          <label for="filterWeight">Weight:</label>
+          <input type="text" id="filterWeight" oninput="filterTable()" />
+        </div>
+        <div>
+          <label for="filterHeight">Height:</label>
+          <input type="text" id="filterHeight" oninput="filterTable()" />
+        </div>
+        <div>
+          <label for="filterHealthHistory">Health History:</label>
+          <input type="text" id="filterHealthHistory" oninput="filterTable()" />
+        </div>
+      </div>
       <div class="mb-5" id="health-records">
         <div>
-          <div id="filters">
-            <div>
-              <label for="filterId">ID:</label>
-              <input type="text" id="filterId" oninput="filterTable()" />
-            </div>
-            <div>
-              <label for="filterFirst">First Name:</label>
-              <input type="text" id="filterFirst" oninput="filterTable()" />
-            </div>
-            <div>
-              <label for="filterLast">Last Name:</label>
-              <input type="text" id="filterLast" oninput="filterTable()" />
-            </div>
-            <div>
-              <label for="filterWeight">Weight:</label>
-              <input type="text" id="filterWeight" oninput="filterTable()" />
-            </div>
-            <div>
-              <label for="filterHeight">Height:</label>
-              <input type="text" id="filterHeight" oninput="filterTable()" />
-            </div>
-            <div>
-              <label for="filterHealthHistory">Health History:</label>
-              <input
-                type="text"
-                id="filterHealthHistory"
-                oninput="filterTable()"
-              />
-            </div>
-          </div>
           <table id="healthRecordsTable">
             <thead id="records-head">
               <tr>
