@@ -5,12 +5,12 @@
 }
 
 #health-records {
-  max-height: 300px; /* Set a fixed height for the table container */
+  max-height: 700px; /* Set a fixed height for the table container */
   overflow-y: auto; /* Enable vertical scrolling */
   border: 1px solid #ddd; /* Optional: Add border for better visibility */
   position: relative;
   width: 85%;
-  left: 7.5%;
+  left: 3%;
 }
 
 /* Style the table */
@@ -32,4 +32,10 @@ td {
   padding: 8px; /* Add padding for better spacing */
   border: 1px solid #ddd; /* Optional: Add borders for better visibility */
   text-align: left; /* Adjust text alignment as needed */
+}
+
+#filters {
+  display: flex;
+  flex-direction: row;
+  left: 3%;
 }

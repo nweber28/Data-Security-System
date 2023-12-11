@@ -42,10 +42,35 @@
         <p class="lead text-dark text-center">Let's view some data</p>
         <p class="lead"></p>
       </main>
-
+      <div id="filters">
+        <div>
+          <label for="filterId">ID:</label>
+          <input type="text" id="filterId" oninput="filterTable()" />
+        </div>
+        <div>
+          <label for="filterFirst">First Name:</label>
+          <input type="text" id="filterFirst" oninput="filterTable()" />
+        </div>
+        <div>
+          <label for="filterLast">Last Name:</label>
+          <input type="text" id="filterLast" oninput="filterTable()" />
+        </div>
+        <div>
+          <label for="filterWeight">Weight:</label>
+          <input type="text" id="filterWeight" oninput="filterTable()" />
+        </div>
+        <div>
+          <label for="filterHeight">Height:</label>
+          <input type="text" id="filterHeight" oninput="filterTable()" />
+        </div>
+        <div>
+          <label for="filterHealthHistory">Health History:</label>
+          <input type="text" id="filterHealthHistory" oninput="filterTable()" />
+        </div>
+      </div>
       <div class="mb-5" id="health-records">
         <div>
-          <table>
+          <table id="healthRecordsTable">
             <thead id="records-head">
               <tr>
                 <th>id</th>
@@ -71,6 +96,55 @@
           </table>
         </div>
       </div>
+      <script>
+        function filterTable() {
+          // Get input elements and filter values for each column
+          var filterId = document
+            .getElementById("filterId")
+            .value.toUpperCase();
+          var filterFirst = document
+            .getElementById("filterFirst")
+            .value.toUpperCase();
+          var filterLast = document
+            .getElementById("filterLast")
+            .value.toUpperCase();
+          var filterWeight = document
+            .getElementById("filterWeight")
+            .value.toUpperCase();
+          var filterHeight = document
+            .getElementById("filterHeight")
+            .value.toUpperCase();
+          var filterHealthHistory = document
+            .getElementById("filterHealthHistory")
+            .value.toUpperCase();
+
+          // Get the table and rows
+          var table = document.querySelector("#healthRecordsTable");
+          console.log(table);
+          var rows = table.querySelectorAll("tbody tr");
+
+          // Loop through all table rows, and hide those that don't match the search query for each column
+          rows.forEach((row) => {
+            var cells = row.getElementsByTagName("td");
+            var shouldShow = true;
+
+            // Check each column separately
+            if (
+              cells[0].innerText.toUpperCase().indexOf(filterId) === -1 ||
+              cells[1].innerText.toUpperCase().indexOf(filterFirst) === -1 ||
+              cells[2].innerText.toUpperCase().indexOf(filterLast) === -1 ||
+              cells[3].innerText.toUpperCase().indexOf(filterWeight) === -1 ||
+              cells[4].innerText.toUpperCase().indexOf(filterHeight) === -1 ||
+              cells[5].innerText.toUpperCase().indexOf(filterHealthHistory) ===
+                -1
+            ) {
+              shouldShow = false;
+            }
+
+            row.style.display = shouldShow ? "" : "none";
+          });
+        }
+      </script>
 
       <% if (writeAccess) { %>
       <!-- Form HTML -->
