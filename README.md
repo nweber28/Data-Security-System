@@ -1,28 +1,68 @@
-Project Setup
-1. Clone This Repository.
-2. Once the code is cloned into one of your local directories be sure to install Node (download should include npm as well) as our code structure and execution relies on these two tools.
-3. Next for the database tools XAMPP must be installed in order to host the database.
-4. Once these dependencies are installed, navigate to the directory that contains server.js within the downloaded code folder.
-5. Create a file within this directory called ‘.env’. This file will contain environment variables that allow for a connection to the database
 
-6. Within this .env folder, paste the following:
-SESSION_SECRET=secret
-MYSQL_HOST = '127.0.0.1'
-MYSQL_USER = 'root'
-MYSQL_PASSWORD = ''
-MYSQL_DATABASE = 'security'
+Project Setup Guide
+===================
 
-7. IMPORTANT: Navigate to your XAMPP Application and configure the Apache Web Server to be running on port 80. Similarly ensure MYSQL Database is configured to run on port 3006.
+Follow the steps below to set up the project on your local machine:
 
-8. Next, start both MYSQL Database and Apache Web Server and make sure that they are both up and running
-9. Navigate back to your terminal and inside the directory containing the server.js file. From there enter the command ‘npm install’. This will install the node_modules needed for our project.
-10. Next type localhost/phpmyadmin into your search bar and hit enter. This should bring you to the MYSQL database page. Create a new database named ‘security’. If one with this exact name exists already, delete/rename it to another name. We will need an empty database with no tables named ‘security’ for the connection to work correctly.
+Prerequisites
+-------------
+Before starting, ensure you have the following installed:
 
-12. Navigate back to your terminal and issue the command ‘npm run db-init’. This should populate the ‘security’ database with two tables: credentials and healthRecords.
-- The credentials table will hold registration information
-- The healthRecords table will be populated with 100 records of data
-13. Once these tables have been populated, navigate back to your terminal and terminate the command (typically ctrl + c).
-Once this is done, issue the command ‘npm run dev-start’. This will launch our application on http://localhost:3007/ .
+- Node.js & npm: https://nodejs.org/ (npm is included)
+- XAMPP: https://www.apachefriends.org/index.html (used to host the MySQL database)
 
-It should be all set up from here!
+Setup Steps
+-----------
 
+1. Clone the Repository:
+   git clone <repository-url>
+
+2. Install Project Dependencies:
+   Navigate to the project directory (the folder containing server.js) and run:
+   npm install
+
+3. Database Configuration:
+
+   a. Install & Configure XAMPP:
+      - Launch the XAMPP Control Panel
+      - Configure the following:
+        * Apache Web Server: Port 80
+        * MySQL Database: Port 3306 (default for MySQL)
+
+      NOTE: If you use a custom port for MySQL, update your .env file accordingly.
+
+      Start both Apache and MySQL services.
+
+4. Create Environment Variables:
+   In the same directory as server.js, create a file named `.env` with the following content:
+
+   SESSION_SECRET=secret
+   MYSQL_HOST=127.0.0.1
+   MYSQL_USER=root
+   MYSQL_PASSWORD=
+   MYSQL_DATABASE=security
+
+   NOTE: If you set a password for your MySQL root user, update the MYSQL_PASSWORD field accordingly.
+
+5. Database Setup:
+   - Open your browser and go to: http://localhost/phpmyadmin
+   - Create a new database named 'security'
+     * If a database named 'security' already exists, delete or rename it
+
+6. Initialize the Database:
+   Run the following command to populate the database with required tables and mock data:
+
+   npm run db-init
+
+   This will create:
+   - credentials table: stores registration information
+   - healthRecords table: pre-populated with 100 sample records
+
+   Once complete, terminate the process using Ctrl + C.
+
+7. Start the Application:
+   Launch the development server with:
+
+   npm run dev-start
+
+   The application will be accessible at: http://localhost:3007
